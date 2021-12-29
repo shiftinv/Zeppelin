@@ -7,6 +7,9 @@ export const zZeppelinGuildConfig = z.strictObject({
   prefix: z.string().optional(),
   levels: z.record(zSnowflake, z.number()).optional(),
   plugins: z.record(z.string(), z.unknown()).optional(),
+
+  // allow top-level definition of yaml aliases
+  aliases: z.unknown().optional(),
 });
 
 /**
