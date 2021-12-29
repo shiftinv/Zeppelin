@@ -3,6 +3,7 @@
 import "./threadsSignalFix";
 
 import {
+  ActivityType,
   Client,
   Events,
   GatewayIntentBits,
@@ -365,6 +366,14 @@ connect().then(async () => {
 
   client.once("ready", () => {
     startUptimeCounter();
+  });
+  client.on("ready", () => {
+    if (process.env.BOT_PRESENCE) {
+      const presence = process.env.BOT_PRESENCE;
+      const i = presence.indexOf(":");
+
+      client.user?.setActivity(presence.slice(i + 1), { type: ActivityType[presence.slice(0, i)] });
+    }
   });
 
   client.rest.on(RESTEvents.RateLimited, (data) => {
