@@ -444,11 +444,11 @@ export function convertMSToDelayString(ms: number): string {
   return result;
 }
 
-export function successMessage(str: string, emoji = "<:zep_check:906897402101891093>") {
+export function successMessage(str: string, emoji = "✅") {
   return emoji ? `${emoji} ${str}` : str;
 }
 
-export function errorMessage(str, emoji = "⚠") {
+export function errorMessage(str, emoji = "❌") {
   return emoji ? `${emoji} ${str}` : str;
 }
 
