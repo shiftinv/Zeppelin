@@ -1,4 +1,3 @@
-import humanizeDuration from "humanize-duration";
 import moment from "moment-timezone";
 import { commandTypeHelpers as ct } from "../../../commandTypes";
 import { registerUpcomingReminder } from "../../../data/loops/upcomingRemindersLoop";
@@ -61,16 +60,10 @@ export const RemindCmd = remindersCmd({
 
     registerUpcomingReminder(reminder);
 
-    const msUntilReminder = reminderTime.diff(now);
-    const timeUntilReminder = humanizeDuration(msUntilReminder, { largest: 2, round: true });
-    const prettyReminderTime = (await timeAndDate.inMemberTz(msg.author.id, reminderTime)).format(
-      pluginData.getPlugin(TimeAndDatePlugin).getDateFormat("pretty_datetime"),
-    );
-
     sendSuccessMessage(
       pluginData,
       msg.channel,
-      `I will remind you in **${timeUntilReminder}** at **${prettyReminderTime}**`,
+      `I will remind you on ${reminderTime.format("[<t:]X[:f>]")} (${reminderTime.format("[<t:]X[:R>]")})`,
     );
   },
 });
