@@ -24,6 +24,9 @@ export const zZeppelinGuildConfig = z.strictObject({
   // Deprecated
   timezone: z.string().optional(),
   date_formats: z.unknown().optional(),
+
+  // allow top-level definition of yaml aliases
+  aliases: z.unknown().optional(),
 });
 
 export type TZeppelinKnub = Knub;
