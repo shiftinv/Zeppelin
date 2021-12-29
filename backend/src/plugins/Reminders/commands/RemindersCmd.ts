@@ -6,7 +6,7 @@ import { TimeAndDatePlugin } from "../../TimeAndDate/TimeAndDatePlugin";
 import { remindersCmd } from "../types";
 
 export const RemindersCmd = remindersCmd({
-  trigger: "reminders",
+  trigger: ["reminders", "bonks"],
   permission: "can_use",
 
   async run({ message: msg, pluginData }) {

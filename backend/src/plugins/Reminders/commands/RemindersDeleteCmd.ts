@@ -5,7 +5,7 @@ import { sorter } from "../../../utils";
 import { remindersCmd } from "../types";
 
 export const RemindersDeleteCmd = remindersCmd({
-  trigger: ["reminders delete", "reminders d"],
+  trigger: ["reminders delete", "reminders d", "bonks delete", "bonks d"],
   permission: "can_use",
 
   signature: {
