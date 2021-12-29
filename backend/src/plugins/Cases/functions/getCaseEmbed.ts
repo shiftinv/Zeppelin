@@ -37,8 +37,9 @@ export async function getCaseEmbed(
 
   const embed: any = {
     title: `${actionTypeStr} - Case #${theCase.case_number}`,
+    timestamp: createdAtWithTz.toISOString(),
     footer: {
-      text: `Case created on ${createdAtWithTz.format(timeAndDate.getDateFormat("pretty_datetime"))}`,
+      text: `Case created:`,
     },
     fields: [
       {
@@ -79,7 +80,7 @@ export async function getCaseEmbed(
           const noteDateWithTz = requestMemberId
             ? await timeAndDate.inMemberTz(requestMemberId, noteDate)
             : timeAndDate.inGuildTz(noteDate);
-          const prettyNoteDate = noteDateWithTz.format(timeAndDate.getDateFormat("pretty_datetime"));
+          const prettyNoteDate = noteDateWithTz.format("[<t:]X[:f>]");
           embed.fields.push({
             name: `${note.mod_name} at ${prettyNoteDate}:`,
             value: chunks[i],
