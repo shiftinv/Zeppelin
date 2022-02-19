@@ -1325,7 +1325,7 @@ export function createDisabledButtonRow(
 
 export function messageSummary(msg: SavedMessage) {
   // Regular text content
-  let result = "```\n" + (msg.data.content ? escapeCodeBlock(msg.data.content) : "<no text content>") + "```";
+  let result = "```\n" + (msg.data.content ? escapeCodeBlock(msg.data.content) : "<no text content>") + "\n```";
 
   // Rich embed
   const richEmbed = (msg.data.embeds || []).find((e) => (e as EmbedData).type === EmbedType.Rich);
