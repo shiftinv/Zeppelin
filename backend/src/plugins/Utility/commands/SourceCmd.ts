@@ -28,13 +28,17 @@ export const SourceCmd = utilityCmd({
     }
 
     const textSource = message.content || "<no text content>";
-    const fullSource = JSON.stringify({
-      id: message.id,
-      content: message.content,
-      attachments: message.attachments,
-      embeds: message.embeds,
-      stickers: message.stickers,
-    });
+    const fullSource = JSON.stringify(
+      {
+        id: message.id,
+        content: message.content,
+        attachments: message.attachments,
+        embeds: message.embeds,
+        stickers: message.stickers,
+      },
+      null,
+      2,
+    );
 
     const escaped = escapeCodeBlock(fullSource);
 
