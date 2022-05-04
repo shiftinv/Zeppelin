@@ -1,3 +1,4 @@
+import { escapeCodeBlock } from "discord.js";
 import moment from "moment-timezone";
 import { commandTypeHelpers as ct } from "../../../commandTypes.js";
 import { getBaseUrl, resolveMessageMember } from "../../../pluginUtils.js";
@@ -36,11 +37,18 @@ export const SourceCmd = utilityCmd({
       stickers: message.stickers,
     });
 
-    const source = `${textSource}\n\nSource:\n\n${fullSource}`;
+    const escaped = escapeCodeBlock(fullSource);
 
-    const archiveId = await pluginData.state.archives.create(source, moment.utc().add(1, "hour"));
-    const baseUrl = getBaseUrl(pluginData);
-    const url = pluginData.state.archives.getUrl(baseUrl, archiveId);
-    cmdMessage.channel.send(`Message source: ${url}`);
+    if (escaped.length < 1950) {
+      cmdMessage.channel.send("```json\n" + escaped + "\n```");
+    } else {
+      const archiveId = await pluginData.state.archives.create(
+        `${textSource}\n\nSource:\n\n${fullSource}`,
+        moment.utc().add(1, "hour"),
+      );
+      const baseUrl = getBaseUrl(pluginData);
+      const url = pluginData.state.archives.getUrl(baseUrl, archiveId);
+      cmdMessage.channel.send(`Message source: ${url}`);
+    }
   },
 });
