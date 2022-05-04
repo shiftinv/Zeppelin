@@ -73,11 +73,13 @@ export const ArchiveChannelCmd = channelArchiverCmd({
         }`;
 
         if (message.attachments.size) {
-          if (args["attachment-channel"]) {
-            const rehostedAttachmentUrl = await rehostAttachment(message.attachments[0], args["attachment-channel"]);
-            content += `\n-- Attachment: ${rehostedAttachmentUrl}`;
-          } else {
-            content += `\n-- Attachment: ${message.attachments[0].url}`;
+          for (const attachment of message.attachments.values()) {
+            if (args["attachment-channel"]) {
+              const rehostedAttachmentUrl = await rehostAttachment(attachment, args["attachment-channel"]);
+              content += `\n-- Attachment: ${rehostedAttachmentUrl}`;
+            } else {
+              content += `\n-- Attachment: ${attachment.url}`;
+            }
           }
         }
 
