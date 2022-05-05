@@ -35,6 +35,7 @@ export const SourceCmd = utilityCmd({
         attachments: message.attachments,
         embeds: message.embeds,
         stickers: message.stickers,
+        components: message.components,
       },
       null,
       2,
