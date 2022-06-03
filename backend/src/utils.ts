@@ -128,6 +128,9 @@ export function prettyDifference(diff: Map<string, { was: any; is: any }>): Map<
       difference.was = humanizeDuration(difference.was * 1000);
       key = "slowmode";
     }
+    if (key === "rawPosition") {
+      key = "position";
+    }
 
     toReturn.set(key, { was: difference.was, is: difference.is });
   }
