@@ -26,7 +26,13 @@ export const LogsThreadDeleteEvt = logsEvt({
   },
 });
 
-const validThreadDiffProps: Set<keyof ThreadChannel> = new Set(["name", "autoArchiveDuration", "rateLimitPerUser"]);
+const validThreadDiffProps: Set<keyof ThreadChannel> = new Set([
+  "name",
+  "autoArchiveDuration",
+  "rateLimitPerUser",
+  "archived",
+  "locked",
+]);
 
 export const LogsThreadUpdateEvt = logsEvt({
   event: "threadUpdate",
