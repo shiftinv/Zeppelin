@@ -59,7 +59,7 @@ export async function handleCompanionPermissions(
   try {
     for (const channelId of permsToDelete) {
       const channel = pluginData.guild.channels.cache.get(channelId as Snowflake);
-      if (!channel || !(channel instanceof TextChannel)) continue;
+      if (!channel || !(channel instanceof TextChannel || channel instanceof VoiceChannel)) continue;
       pluginData.state.serverLogs.ignoreLog(LogType.CHANNEL_UPDATE, channelId, 3 * 1000);
       await channel.permissionOverwrites
         .resolve(userId as Snowflake)
@@ -68,7 +68,7 @@ export async function handleCompanionPermissions(
 
     for (const [channelId, permissions] of permsToSet) {
       const channel = pluginData.guild.channels.cache.get(channelId as Snowflake);
-      if (!channel || !(channel instanceof TextChannel)) continue;
+      if (!channel || !(channel instanceof TextChannel || channel instanceof VoiceChannel)) continue;
       if (channel.permissionOverwrites.cache.size >= MAX_OVERWRITES) {
         logs.logBotAlert({
           body: `Could not apply companion channel permissions for <#${channel.id}>: too many permissions`,
