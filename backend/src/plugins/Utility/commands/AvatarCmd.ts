@@ -1,7 +1,7 @@
-import { APIEmbed, ImageFormat } from "discord.js";
+import { APIEmbed, GuildMember, ImageFormat, User } from "discord.js";
 import { commandTypeHelpers as ct } from "../../../commandTypes";
 import { sendErrorMessage } from "../../../pluginUtils";
-import { UnknownUser, renderUsername } from "../../../utils";
+import { UnknownUser, renderUsername, resolveMember } from "../../../utils";
 import { utilityCmd } from "../types";
 
 export const AvatarCmd = utilityCmd({
@@ -10,17 +10,24 @@ export const AvatarCmd = utilityCmd({
   permission: "can_avatar",
 
   signature: {
-    user: ct.resolvedMember({ required: false }) || ct.resolvedUserLoose({ required: false }),
+    user: ct.resolvedUserLoose({ required: false }),
+
+    guild: ct.switchOption({ def: false, shortcut: "g" }),
   },
 
   async run({ message: msg, args, pluginData }) {
-    const user = args.user ?? msg.member ?? msg.author;
+    const user = args.user ?? msg.author;
     if (!(user instanceof UnknownUser)) {
+      let member: GuildMember | User = user;
+      if (args.guild) {
+        member = (await resolveMember(pluginData.client, pluginData.guild, user.id)) ?? user;
+      }
+
       const embed: APIEmbed = {
         image: {
-          url: user.displayAvatarURL({ extension: ImageFormat.PNG, size: 2048 }),
+          url: member.displayAvatarURL({ extension: ImageFormat.PNG, size: 2048 }),
         },
-        title: `Avatar of ${renderUsername(user)}:`,
+        title: `Avatar of ${renderUsername(member)}:`,
       };
       msg.channel.send({ embeds: [embed] });
     } else {
