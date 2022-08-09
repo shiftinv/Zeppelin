@@ -13,6 +13,7 @@ import { IgnoredEventType, modActionsCmd } from "../types";
 
 const opts = {
   mod: ct.member({ option: true }),
+  "delete-days": ct.number({ option: true, shortcut: "d" }),
 };
 
 export const ForcebanCmd = modActionsCmd({
@@ -66,10 +67,13 @@ export const ForcebanCmd = modActionsCmd({
     ignoreEvent(pluginData, IgnoredEventType.Ban, user.id);
     pluginData.state.serverLogs.ignoreLog(LogType.MEMBER_BAN, user.id);
 
+    const deleteMessageDays =
+      args["delete-days"] ?? (await pluginData.config.getForMessage(msg)).ban_delete_message_days;
+
     try {
       // FIXME: Use banUserId()?
       await pluginData.guild.bans.create(user.id as Snowflake, {
-        deleteMessageSeconds: (1 * DAYS) / MINUTES,
+        deleteMessageSeconds: (deleteMessageDays * DAYS) / MINUTES,
         reason: reason ?? undefined,
       });
     } catch {
