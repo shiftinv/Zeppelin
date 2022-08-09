@@ -24,13 +24,13 @@ export const SlowmodeSetCmd = slowmodeCmd({
 
   signature: [
     {
-      time: ct.delay(),
+      time: ct.delaySec(),
 
       mode: ct.string({ option: true, shortcut: "m" }),
     },
     {
       channel: ct.textChannel(),
-      time: ct.delay(),
+      time: ct.delaySec(),
 
       mode: ct.string({ option: true, shortcut: "m" }),
     },

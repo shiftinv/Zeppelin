@@ -40,6 +40,15 @@ export const commandTypes = {
     return result;
   },
 
+  delaySec(value) {
+    const result = convertDelayStringToMS(value, "s");
+    if (result == null) {
+      throw new TypeConversionError(`Could not convert ${value} to a delay`);
+    }
+
+    return result;
+  },
+
   async resolvedUser(value, context: CommandContext<any>) {
     const result = await resolveUser(context.pluginData.client, value);
     if (result == null || result instanceof UnknownUser) {
@@ -121,6 +130,7 @@ export const commandTypeHelpers = {
   ...baseCommandParameterTypeHelpers,
 
   delay: createTypeHelper<number>(commandTypes.delay),
+  delaySec: createTypeHelper<number>(commandTypes.delaySec),
   resolvedUser: createTypeHelper<Promise<User>>(commandTypes.resolvedUser),
   resolvedUserLoose: createTypeHelper<Promise<User | UnknownUser>>(commandTypes.resolvedUserLoose),
   resolvedMember: createTypeHelper<Promise<GuildMember>>(commandTypes.resolvedMember),
