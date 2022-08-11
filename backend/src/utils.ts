@@ -427,7 +427,7 @@ const MAX_DELAY_STRING_AMOUNT = 100 * 365 * DAYS;
  * Turns a "delay string" such as "1h30m" to milliseconds
  */
 export function convertDelayStringToMS(str, defaultUnit = "m"): number | null {
-  const regex = /^([0-9]+)\s*((?:mo?)|[ywdhs])?[a-z]*\s*/;
+  const regex = /^([0-9]+(?:\.[0-9]+)?)\s*((?:mo?)|[ywdhs])?[a-z]*\s*/;
   let match;
   let ms = 0;
 
