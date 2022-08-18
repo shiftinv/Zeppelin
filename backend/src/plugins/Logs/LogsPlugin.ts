@@ -1,4 +1,4 @@
-import { CooldownManager, PluginOptions } from "knub";
+import { CooldownManager, EventListenerBlueprint, PluginOptions } from "knub";
 import DefaultLogMessages from "../../data/DefaultLogMessages.json";
 import { GuildArchives } from "../../data/GuildArchives";
 import { GuildCases } from "../../data/GuildCases";
@@ -140,6 +140,14 @@ const defaultOptions: PluginOptions<LogsPluginType> = {
   ],
 };
 
+function allowAll<T extends EventListenerBlueprint<any, any>>(evt: T): T {
+  return {
+    allowBots: true,
+    allowSelf: true,
+    ...evt,
+  };
+}
+
 export const LogsPlugin = zeppelinGuildPlugin<LogsPluginType>()({
   name: "logs",
   showInDocs: true,
@@ -153,16 +161,16 @@ export const LogsPlugin = zeppelinGuildPlugin<LogsPluginType>()({
   defaultOptions,
 
   events: [
-    LogsGuildMemberAddEvt,
-    LogsGuildMemberRemoveEvt,
-    LogsGuildMemberUpdateEvt,
+    allowAll(LogsGuildMemberAddEvt),
+    allowAll(LogsGuildMemberRemoveEvt),
+    allowAll(LogsGuildMemberUpdateEvt),
     LogsChannelCreateEvt,
     LogsChannelDeleteEvt,
     LogsChannelUpdateEvt,
     LogsRoleCreateEvt,
     LogsRoleDeleteEvt,
     LogsRoleUpdateEvt,
-    LogsVoiceStateUpdateEvt,
+    allowAll(LogsVoiceStateUpdateEvt),
     LogsStageInstanceCreateEvt,
     LogsStageInstanceDeleteEvt,
     LogsStageInstanceUpdateEvt,
