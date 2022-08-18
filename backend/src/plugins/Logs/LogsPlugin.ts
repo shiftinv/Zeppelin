@@ -1,4 +1,4 @@
-import { CooldownManager, guildPlugin } from "vety";
+import { CooldownManager, EventListenerBlueprint, guildPlugin } from "vety";
 import { GuildArchives } from "../../data/GuildArchives.js";
 import { GuildCases } from "../../data/GuildCases.js";
 import { GuildLogs } from "../../data/GuildLogs.js";
@@ -114,6 +114,15 @@ function getCasesPlugin(): Promise<any> {
   return import("../Cases/CasesPlugin.js") as Promise<any>;
 }
 
+
+function allowAll<T extends EventListenerBlueprint<any, any>>(evt: T): T {
+  return {
+    allowBots: true,
+    allowSelf: true,
+    ...evt,
+  };
+}
+
 export const LogsPlugin = guildPlugin<LogsPluginType>()({
   name: "logs",
 
@@ -130,16 +139,16 @@ export const LogsPlugin = guildPlugin<LogsPluginType>()({
   ],
 
   events: [
-    LogsGuildMemberAddEvt,
-    LogsGuildMemberRemoveEvt,
-    LogsGuildMemberUpdateEvt,
+    allowAll(LogsGuildMemberAddEvt),
+    allowAll(LogsGuildMemberRemoveEvt),
+    allowAll(LogsGuildMemberUpdateEvt),
     LogsChannelCreateEvt,
     LogsChannelDeleteEvt,
     LogsChannelUpdateEvt,
     LogsRoleCreateEvt,
     LogsRoleDeleteEvt,
     LogsRoleUpdateEvt,
-    LogsVoiceStateUpdateEvt,
+    allowAll(LogsVoiceStateUpdateEvt),
     LogsStageInstanceCreateEvt,
     LogsStageInstanceDeleteEvt,
     LogsStageInstanceUpdateEvt,
