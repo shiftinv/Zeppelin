@@ -67,9 +67,13 @@ const zRule = z.strictObject({
   cooldown: zDelayString.nullable().default(null),
   allow_further_rules: z.boolean().default(false),
   triggers: z.array(zTriggersMap),
-  actions: zActionsMap.refine((v) => !(v.clean && v.start_thread), {
-    message: "Cannot have both clean and start_thread active at the same time",
-  }),
+  actions: zActionsMap
+    .refine((v) => !(v.clean && v.start_thread), {
+      message: "Cannot have both clean and start_thread active at the same time",
+    })
+    .refine((v) => !(v.clean && v.react), {
+      message: "Cannot have both clean and react active at the same time",
+    }),
 });
 export type TRule = z.infer<typeof zRule>;
 
