@@ -16,6 +16,7 @@ export const searchCmdSignature = {
   ids: ct.switchOption(),
   regex: ct.switchOption({ def: false, shortcut: "re" }),
   // "status-search": ct.switchOption({ def: false, shortcut: "ss" }),
+  flag: ct.string({ option: true }),
 };
 
 export const SearchCmd = utilityCmd({

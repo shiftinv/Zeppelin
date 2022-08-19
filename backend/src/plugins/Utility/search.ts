@@ -8,6 +8,7 @@ import {
   PermissionsBitField,
   Snowflake,
   User,
+  UserFlagsString,
 } from "discord.js";
 import escapeStringRegexp from "escape-string-regexp";
 import { ArgsFromSignatureOrArray, GuildPluginData } from "knub";
@@ -121,12 +122,7 @@ export async function displaySearch(
           break;
       }
     } catch (e) {
-      if (e instanceof SearchError) {
-        sendErrorMessage(pluginData, msg.channel, e.message);
-        return;
-      }
-
-      if (e instanceof InvalidRegexError) {
+      if (e instanceof SearchError || e instanceof InvalidRegexError || e instanceof RangeError) {
         sendErrorMessage(pluginData, msg.channel, e.message);
         return;
       }
@@ -327,6 +323,10 @@ async function performMemberSearch(
 
   if (args.bot) {
     matchingMembers = matchingMembers.filter((m) => m.user.bot);
+  }
+
+  if (args.flag) {
+    matchingMembers = matchingMembers.filter((m) => m.user.flags?.has(args.flag as UserFlagsString));
   }
 
   if (args.query) {
