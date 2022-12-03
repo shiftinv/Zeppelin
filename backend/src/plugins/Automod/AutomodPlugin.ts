@@ -5,7 +5,7 @@ import { GuildArchives } from "../../data/GuildArchives";
 import { GuildLogs } from "../../data/GuildLogs";
 import { GuildSavedMessages } from "../../data/GuildSavedMessages";
 import { discardRegExpRunner, getRegExpRunner } from "../../regExpRunners";
-import { MINUTES, SECONDS } from "../../utils";
+import { MINUTES, SECONDS, convertDelayStringToMS } from "../../utils";
 import { registerEventListenersFromMap } from "../../utils/registerEventListenersFromMap";
 import { unregisterEventListenersFromMap } from "../../utils/unregisterEventListenersFromMap";
 import { CountersPlugin } from "../Counters/CountersPlugin";
@@ -80,6 +80,19 @@ export const AutomodPlugin = zeppelinGuildPlugin<AutomodPluginType>()({
   customOverrideCriteriaFunctions: {
     antiraid_level: (pluginData, matchParams, value) => {
       return value ? value === pluginData.state.cachedAntiraidLevel : false;
+    },
+    recent_join: (pluginData, matchParams, value) => {
+      if (typeof value !== "string") return false;
+      const delay = convertDelayStringToMS(value);
+      if (!delay) return false;
+
+      if (!matchParams.userId) return false;
+      // TODO: this assumes the member is cached, this may not be correct
+      const member = pluginData.guild.members.cache.get(matchParams.userId);
+      if (!member || !member.joinedTimestamp) return false;
+
+      const threshold = Date.now() - delay;
+      return member.joinedTimestamp >= threshold;
     },
   },
 
