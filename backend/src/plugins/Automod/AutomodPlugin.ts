@@ -5,7 +5,7 @@ import { GuildArchives } from "../../data/GuildArchives.js";
 import { GuildLogs } from "../../data/GuildLogs.js";
 import { GuildSavedMessages } from "../../data/GuildSavedMessages.js";
 import { discardRegExpRunner, getRegExpRunner } from "../../regExpRunners.js";
-import { MINUTES, SECONDS } from "../../utils.js";
+import { convertDelayStringToMS, MINUTES, SECONDS } from "../../utils.js";
 import { registerEventListenersFromMap } from "../../utils/registerEventListenersFromMap.js";
 import { unregisterEventListenersFromMap } from "../../utils/unregisterEventListenersFromMap.js";
 import { CommonPlugin } from "../Common/CommonPlugin.js";
@@ -54,6 +54,19 @@ export const AutomodPlugin = guildPlugin<AutomodPluginType>()({
   customOverrideCriteriaFunctions: {
     antiraid_level: (pluginData, matchParams, value) => {
       return value ? value === pluginData.state.cachedAntiraidLevel : false;
+    },
+    recent_join: (pluginData, matchParams, value) => {
+      if (typeof value !== "string") return false;
+      const delay = convertDelayStringToMS(value);
+      if (!delay) return false;
+
+      if (!matchParams.userId) return false;
+      // TODO: this assumes the member is cached, this may not be correct
+      const member = pluginData.guild.members.cache.get(matchParams.userId);
+      if (!member || !member.joinedTimestamp) return false;
+
+      const threshold = Date.now() - delay;
+      return member.joinedTimestamp >= threshold;
     },
   },
 

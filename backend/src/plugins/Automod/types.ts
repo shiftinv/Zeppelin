@@ -70,6 +70,7 @@ export interface AutomodPluginType extends BasePluginType {
 
   customOverrideCriteria: {
     antiraid_level?: string;
+    recent_join?: string;
   };
 
   state: {
