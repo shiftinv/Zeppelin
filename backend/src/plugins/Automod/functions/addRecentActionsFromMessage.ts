@@ -3,6 +3,12 @@ import { getEmojiInString, getRoleMentions, getUrlsInString, getUserMentions } f
 import { RecentActionType } from "../constants";
 import { AutomodContext, AutomodPluginType } from "../types";
 
+// "real link" = a link that Discord highlights
+// taken from matchLinks trigger
+function isRealLink(link: string): boolean {
+  return /^https?:\/\//i.test(link);
+}
+
 export function addRecentActionsFromMessage(pluginData: GuildPluginData<AutomodPluginType>, context: AutomodContext) {
   const message = context.message!;
   const globalIdentifier = message.user_id;
@@ -40,7 +46,7 @@ export function addRecentActionsFromMessage(pluginData: GuildPluginData<AutomodP
     });
   }
 
-  const linkCount = getUrlsInString(message.data.content || "").length;
+  const linkCount = getUrlsInString(message.data.content || "").filter((u) => isRealLink(u.input)).length;
   if (linkCount) {
     pluginData.state.recentActions.push({
       context,
