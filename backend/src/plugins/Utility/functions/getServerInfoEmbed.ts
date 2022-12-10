@@ -38,7 +38,8 @@ export async function getServerInfoEmbed(
     return null;
   }
 
-  const features = (restGuild || guildPreview)!.features;
+  let features = (restGuild || guildPreview)!.features;
+  features = [...features].sort();
   if (!thisServer && !features.includes("DISCOVERABLE")) {
     return null;
   }
@@ -73,7 +74,7 @@ export async function getServerInfoEmbed(
   embed.description = `${preEmbedPadding}**Basic Information**\n${basicInformation.join("\n")}`;
 
   // IMAGE LINKS
-  const iconUrl = `[Link](${(restGuild || guildPreview)!.iconURL()})`;
+  const iconUrl = (restGuild || guildPreview)!.icon ? `[Link](${(restGuild || guildPreview)!.iconURL()})` : "None";
   const bannerUrl = restGuild?.banner ? `[Link](${restGuild.bannerURL()})` : "None";
   const splashUrl = (restGuild || guildPreview)!.splash
     ? `[Link](${(restGuild || guildPreview)!.splashURL()})`
@@ -203,11 +204,11 @@ export async function getServerInfoEmbed(
       }[restGuild.premiumTier] ?? 50;
     const maxStickers =
       {
-        [GuildPremiumTier.None]: 0,
+        [GuildPremiumTier.None]: 5,
         [GuildPremiumTier.Tier1]: 15,
         [GuildPremiumTier.Tier2]: 30,
         [GuildPremiumTier.Tier3]: 60,
-      }[restGuild.premiumTier] ?? 0;
+      }[restGuild.premiumTier] ?? 5;
 
     const availableEmojis = restGuild.emojis.cache.filter((e) => e.available);
     otherStats.push(
@@ -224,7 +225,7 @@ export async function getServerInfoEmbed(
     otherStats.push(
       `Emojis: **${guildPreview!.emojis.size}**${roleLockedEmojis ? ` (__${roleLockedEmojis} role-locked__)` : ""}`,
     );
-    // otherStats.push(`Stickers: **${guildPreview!.stickers.size}**`); Wait on DJS
+    otherStats.push(`Stickers: **${guildPreview!.stickers.size}**`);
   }
 
   if (thisServer) {
