@@ -4,6 +4,7 @@ import { commandTypeHelpers as ct } from "../../../commandTypes.js";
 import { MAX_NICKNAME_ENTRIES_PER_USER } from "../../../data/GuildNicknameHistory.js";
 import { MAX_USERNAME_ENTRIES_PER_USER } from "../../../data/UsernameHistory.js";
 import { NICKNAME_RETENTION_PERIOD } from "../../../data/cleanup/nicknames.js";
+import { USERNAME_RETENTION_PERIOD } from "../../../data/cleanup/usernames.js";
 import { DAYS, renderUsername } from "../../../utils.js";
 import { nameHistoryCmd } from "../types.js";
 
@@ -33,7 +34,7 @@ export const NamesCmd = nameHistoryCmd({
     const currentUsername = user ? renderUsername(user) : args.userId;
 
     const nicknameDays = Math.round(NICKNAME_RETENTION_PERIOD / DAYS);
-    const usernameDays = Math.round(NICKNAME_RETENTION_PERIOD / DAYS);
+    const usernameDays = Math.round(USERNAME_RETENTION_PERIOD / DAYS);
 
     let message = `Name history for **${currentUsername}**:`;
     if (nicknameRows.length) {

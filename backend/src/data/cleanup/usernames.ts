@@ -4,7 +4,7 @@ import { DAYS, DBDateFormat } from "../../utils.js";
 import { dataSource } from "../dataSource.js";
 import { UsernameHistoryEntry } from "../entities/UsernameHistoryEntry.js";
 
-export const USERNAME_RETENTION_PERIOD = 30 * DAYS;
+export const USERNAME_RETENTION_PERIOD = 90 * DAYS;
 const CLEAN_PER_LOOP = 500;
 
 export async function cleanupUsernames(): Promise<number> {
