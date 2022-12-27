@@ -1,5 +1,6 @@
 import { LoadedGuildPlugin, PluginCommandDefinition } from "knub";
 import { commandTypeHelpers as ct } from "../../../commandTypes";
+import { env } from "../../../env";
 import { createChunkedMessage } from "../../../utils";
 import { utilityCmd } from "../types";
 
@@ -62,7 +63,7 @@ export const HelpCmd = utilityCmd({
       let snippet = `**${prefix}${trigger}**`;
       if (description) snippet += `\n${description}`;
       if (usage) snippet += `\nBasic usage: \`${usage}\``;
-      snippet += `\n<https://zeppelin.gg/docs/plugins/${plugin.blueprint.name}/usage#command-${commandSlug}>`;
+      snippet += `\n<${env.DASHBOARD_URL}/docs/plugins/${plugin.blueprint.name}/usage#command-${commandSlug}>`;
 
       return snippet;
     });
