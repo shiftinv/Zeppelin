@@ -46,7 +46,7 @@ export function addRecentActionsFromMessage(pluginData: GuildPluginData<AutomodP
     });
   }
 
-  const linkCount = getUrlsInString(message.data.content || "").filter((u) => isRealLink(u.input)).length;
+  const linkCount = getUrlsInString(message.data.content || "", false, true).filter((u) => isRealLink(u.input)).length;
   if (linkCount) {
     pluginData.state.recentActions.push({
       context,
