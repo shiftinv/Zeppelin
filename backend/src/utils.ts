@@ -520,14 +520,24 @@ const realLinkRegex = /https?:\/\/\S+/; // http://anything or https://anything
 const plainLinkRegex = /((?!https?:\/\/)\S)+\.\S+/; // anything.anything, without http:// or https:// preceding it
 // Both of the above, with precedence on the first one
 const urlRegex = new RegExp(`(${realLinkRegex.source}|${plainLinkRegex.source})`, "g");
+const urlCodeblockRegex = new RegExp(`\`\`\`.*?\`\`\`|${urlRegex.source}`, "gs");
 const protocolRegex = /^[a-z]+:\/\//;
 
 interface MatchedURL extends URL {
   input: string;
 }
 
-export function getUrlsInString(str: string, onlyUnique = false): MatchedURL[] {
-  let matches = [...(str.match(urlRegex) ?? [])];
+export function getUrlsInString(str: string, onlyUnique = false, ignoreCodeblocks = false): MatchedURL[] {
+  let matches: string[];
+  if (ignoreCodeblocks) {
+    // use `urlCodeblockRegex`, only return those with a matched group
+    // (i.e. anything not in a codeblock, since that would match outside of the group)
+    matches = [...str.matchAll(urlCodeblockRegex)].map((m) => m[1]).filter((m) => m);
+  } else {
+    // default behavior, just match all urls anywhere
+    matches = [...(str.match(urlRegex) ?? [])];
+  }
+
   if (onlyUnique) {
     matches = unique(matches);
   }
