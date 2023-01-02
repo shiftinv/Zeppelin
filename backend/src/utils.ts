@@ -543,6 +543,9 @@ export function getUrlsInString(str: string, onlyUnique = false, ignoreCodeblock
   }
 
   return matches.reduce<MatchedURL[]>((urls, match) => {
+    // avoid issue with links like `<http://example.com>` having a `.com>` tld
+    match = match.replace(/^<|>$/, "");
+
     const withProtocol = protocolRegex.test(match) ? match : `https://${match}`;
 
     let matchUrl: MatchedURL;
