@@ -6,7 +6,7 @@ import { AutomodContext, AutomodPluginType } from "../types";
 // "real link" = a link that Discord highlights
 // taken from matchLinks trigger
 function isRealLink(link: string): boolean {
-  return /^https?:\/\//i.test(link);
+  return /^https?:\/\/|\bdiscord\.(gg|com)\//i.test(link);
 }
 
 export function addRecentActionsFromMessage(pluginData: GuildPluginData<AutomodPluginType>, context: AutomodContext) {
