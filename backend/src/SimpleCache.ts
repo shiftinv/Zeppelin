@@ -1,6 +1,6 @@
 import Timeout = NodeJS.Timeout;
 
-const CLEAN_INTERVAL = 1000;
+const CLEAN_INTERVAL = 10 * 1000; // 10 seconds
 
 export class SimpleCache<T = any> {
   protected readonly retentionTime: number;
@@ -19,6 +19,9 @@ export class SimpleCache<T = any> {
     }
 
     this.store = new Map();
+
+    // start loop
+    this.cleanLoop();
   }
 
   unload() {
