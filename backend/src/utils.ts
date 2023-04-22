@@ -126,6 +126,9 @@ export function prettyDifference(diff: Map<string, { was: any; is: any }>): Map<
     if (key === "rawPosition") {
       key = "position";
     }
+    if (key === "appliedTags") {
+      key = "tags";
+    }
 
     toReturn.set(key, { was: difference.was, is: difference.is });
   }
