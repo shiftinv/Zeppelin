@@ -315,11 +315,7 @@ connect().then(async () => {
         const row = await guildConfigs.getActiveByKey(key);
         if (row) {
           try {
-            const loaded = loadYamlSafely(row.config);
-            // Remove deprecated properties some may still have in their config
-            delete loaded.success_emoji;
-            delete loaded.error_emoji;
-            return loaded;
+            return loadYamlSafely(row.config);
           } catch (err) {
             logger.error(`Error while loading config "${key}": ${err.message}`);
             return {};
