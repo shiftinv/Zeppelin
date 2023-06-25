@@ -136,7 +136,7 @@ export async function muteUser(
         throw new RecoverablePluginError(ERRORS.USER_NOT_MODERATABLE, pluginData.guild);
       }
 
-      await member.disableCommunicationUntil(timeoutUntil).catch(noop);
+      await member.disableCommunicationUntil(timeoutUntil, reason ?? undefined).catch(noop);
     }
 
     // If enabled, move the user to the mute voice channel (e.g. afk - just to apply the voice perms from the mute role)
