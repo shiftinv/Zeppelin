@@ -46,7 +46,15 @@ export function addRecentActionsFromMessage(pluginData: GuildPluginData<AutomodP
     });
   }
 
-  const linkCount = getUrlsInString(message.data.content || "", false, true).filter((u) => isRealLink(u.input)).length;
+  let links = getUrlsInString(message.data.content || "", false, true).filter((u) => isRealLink(u.input));
+
+  // this is totally hacked in and not clean code, but actually making this work on a per-rule level would require a huge amount of work, so I'm just not doing that c:
+  const excludedDomains = pluginData.config.get().exclude_link_spam_domains?.map((s) => s.toLowerCase());
+  if (excludedDomains?.length) {
+    links = links.filter((u) => !excludedDomains.includes(u.hostname.toLowerCase().replace(/^www\./, "")));
+  }
+
+  const linkCount = links.length;
   if (linkCount) {
     pluginData.state.recentActions.push({
       context,

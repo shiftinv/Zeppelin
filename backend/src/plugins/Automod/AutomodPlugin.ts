@@ -41,6 +41,7 @@ const defaultOptions = {
     antiraid_levels: ["low", "medium", "high"],
     can_set_antiraid: false,
     can_view_antiraid: false,
+    exclude_link_spam_domains: [],
   },
   overrides: [
     {
