@@ -1,7 +1,7 @@
 import z from "zod";
 import { isTruthy, unique } from "../../../utils";
 import { LogsPlugin } from "../../Logs/LogsPlugin";
-import { automodAction } from "../helpers";
+import { automodAction, formatTakenActions } from "../helpers";
 
 export const LogAction = automodAction({
   configSchema: z.boolean().default(true),
@@ -9,7 +9,7 @@ export const LogAction = automodAction({
   async apply({ pluginData, contexts, ruleName, matchResult }) {
     const users = unique(contexts.map((c) => c.user)).filter(isTruthy);
     const user = users[0];
-    const actionsTaken = Object.keys(pluginData.config.get().rules[ruleName].actions).join(", ");
+    const actionsTaken = formatTakenActions(pluginData, ruleName);
 
     pluginData.getPlugin(LogsPlugin).logAutomodAction({
       rule: ruleName,

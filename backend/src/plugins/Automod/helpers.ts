@@ -71,3 +71,10 @@ export function automodAction<TConfigSchema extends ZodTypeAny>(
 ): AutomodActionBlueprint<TConfigSchema> {
   return blueprint;
 }
+
+export function formatTakenActions(pluginData: GuildPluginData<AutomodPluginType>, ruleName: string) {
+  return Object.entries(pluginData.config.get().rules[ruleName].actions)
+    .filter(([, value]) => value !== false) // don't log actions set to `false`
+    .map(([name]) => name)
+    .join(", ");
+}
