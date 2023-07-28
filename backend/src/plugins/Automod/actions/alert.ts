@@ -23,7 +23,7 @@ import { messageIsEmpty } from "../../../utils/messageIsEmpty.js";
 import { userToTemplateSafeUser } from "../../../utils/templateSafeObjects.js";
 import { InternalPosterPlugin } from "../../InternalPoster/InternalPosterPlugin.js";
 import { LogsPlugin } from "../../Logs/LogsPlugin.js";
-import { automodAction } from "../helpers.js";
+import { automodAction, formatTakenActions } from "../helpers.js";
 
 const configSchema = z.object({
   channel: zSnowflake,
@@ -45,7 +45,7 @@ export const AlertAction = automodAction({
 
       const safeUsers = contexts.map((c) => (c.user ? userToTemplateSafeUser(c.user) : null)).filter(isTruthy);
       const safeUser = safeUsers[0];
-      const actionsTaken = Object.keys(pluginData.config.get().rules[ruleName].actions).join(", ");
+      const actionsTaken = formatTakenActions(pluginData, ruleName);
 
       const logMessage = await logs.getLogMessage(
         LogType.AUTOMOD_ACTION,
