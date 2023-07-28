@@ -63,6 +63,7 @@ export const zAutomodConfig = z.strictObject({
   can_set_antiraid: z.boolean().default(false),
   can_view_antiraid: z.boolean().default(false),
   can_debug_automod: z.boolean().default(false),
+  exclude_link_spam_domains: z.array(z.string()).default([]),
 });
 
 export interface AutomodPluginType extends BasePluginType {
