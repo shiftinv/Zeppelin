@@ -38,7 +38,7 @@
     "cross-env": "^7.0.3",
     "deep-diff": "^1.0.2",
     "discord.js": "*",
-    "emoji-regex": "^8.0.0",
+    "emoji-regex": "^10.0.0",
     "escape-string-regexp": "^1.0.5",
     "express": "^4.20.0",
     "fp-ts": "^2.0.1",
