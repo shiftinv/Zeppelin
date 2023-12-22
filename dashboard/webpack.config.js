@@ -120,6 +120,7 @@ let config = {
           loader: "file-loader",
           options: {
             name: "[name]-[hash].[ext]",
+            esModule: false,
           },
         },
       },
