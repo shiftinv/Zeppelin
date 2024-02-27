@@ -20,4 +20,6 @@ export enum RecentActionType {
   ThreadCreate,
 }
 
-export const zNotify = z.union([z.literal("dm"), z.literal("channel")]);
+// see disableUserNotificationStrings
+const zDisableStrings = z.union([z.literal("no"), z.literal("none"), z.literal("off")]);
+export const zNotify = z.union([z.literal("dm"), z.literal("channel"), zDisableStrings]);
