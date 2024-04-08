@@ -18,6 +18,7 @@ export enum RecentActionType {
   Sticker,
   MemberLeave,
   ThreadCreate,
+  Poll,
 }
 
 // see disableUserNotificationStrings

@@ -22,6 +22,7 @@ import { MentionSpamTrigger } from "./mentionSpam";
 import { MessageSpamTrigger } from "./messageSpam";
 import { MuteTrigger } from "./mute";
 import { NoteTrigger } from "./note";
+import { PollSpamTrigger } from "./pollSpam";
 import { RoleAddedTrigger } from "./roleAdded";
 import { RoleRemovedTrigger } from "./roleRemoved";
 import { StickerSpamTrigger } from "./stickerSpam";
@@ -58,6 +59,7 @@ export const availableTriggers: Record<string, AutomodTriggerBlueprint<any, any>
   member_join_spam: MemberJoinSpamTrigger,
   sticker_spam: StickerSpamTrigger,
   thread_create_spam: ThreadCreateSpamTrigger,
+  poll_spam: PollSpamTrigger,
 
   counter_trigger: CounterTrigger,
 

@@ -119,6 +119,10 @@ export class GuildSavedMessages extends BaseGuildRepository<SavedMessage> {
       }));
     }
 
+    if (msg.poll) {
+      data.hasPoll = true;
+    }
+
     return data;
   }
 

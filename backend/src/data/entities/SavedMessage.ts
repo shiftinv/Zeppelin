@@ -74,6 +74,7 @@ export interface ISavedMessageData {
   embeds?: ISavedMessageEmbedData[];
   stickers?: ISavedMessageStickerData[];
   timestamp: number;
+  hasPoll?: boolean; // kind of ugly, but i want to avoid possible future conflicts
 }
 
 @Entity("messages")

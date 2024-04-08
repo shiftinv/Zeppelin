@@ -156,4 +156,20 @@ export function addRecentActionsFromMessage(pluginData: GuildPluginData<AutomodP
       count: stickerCount,
     });
   }
+
+  if (message.data.hasPoll) {
+    pluginData.state.recentActions.push({
+      context,
+      type: RecentActionType.Poll,
+      identifier: globalIdentifier,
+      count: 1,
+    });
+
+    pluginData.state.recentActions.push({
+      context,
+      type: RecentActionType.Poll,
+      identifier: perChannelIdentifier,
+      count: 1,
+    });
+  }
 }
