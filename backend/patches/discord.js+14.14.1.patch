@@ -1,0 +1,29 @@
+diff --git a/node_modules/discord.js/src/structures/Message.js b/node_modules/discord.js/src/structures/Message.js
+index adb5ed5..3c1ca1e 100644
+--- a/node_modules/discord.js/src/structures/Message.js
++++ b/node_modules/discord.js/src/structures/Message.js
+@@ -406,6 +406,12 @@ class Message extends Base {
+     } else {
+       this.interaction ??= null;
+     }
++
++    if ('poll' in data) {
++      this.poll = data.poll;
++    } else {
++      this.poll ??= null;
++    }
+   }
+ 
+   /**
+diff --git a/node_modules/discord.js/typings/index.d.ts b/node_modules/discord.js/typings/index.d.ts
+index ed74873..c2cee21 100644
+--- a/node_modules/discord.js/typings/index.d.ts
++++ b/node_modules/discord.js/typings/index.d.ts
+@@ -2070,6 +2070,7 @@ export class Message<InGuild extends boolean = boolean> extends Base {
+   public pinned: boolean;
+   public reactions: ReactionManager;
+   public stickers: Collection<Snowflake, Sticker>;
++  public poll: any;  // :>
+   public position: number | null;
+   public roleSubscriptionData: RoleSubscriptionData | null;
+   public resolved: CommandInteractionResolvedData | null;
