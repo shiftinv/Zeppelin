@@ -9,9 +9,14 @@ const isAuthenticated = async () => {
   return false; // Still no API key -> not authenticated
 };
 
+const getLoginURL = () => {
+  const useCanary = Number(localStorage.getItem("canary") || "0");
+  return `${window.API_URL}/auth/login?canary=${useCanary}`;
+};
+
 export const authGuard: NavigationGuard = async (to, from, next) => {
   if (await isAuthenticated()) return next();
-  window.location.href = `${window.API_URL}/auth/login`;
+  window.location.href = getLoginURL();
 };
 
 export const loginCallbackGuard: NavigationGuard = async (to, from, next) => {
@@ -26,6 +31,6 @@ export const loginCallbackGuard: NavigationGuard = async (to, from, next) => {
 
 export const authRedirectGuard: NavigationGuard = async (to, form, next) => {
   if (await isAuthenticated()) return next("/dashboard");
-  window.location.href = `${window.API_URL}/auth/login`;
+  window.location.href = getLoginURL();
   return next();
 };
