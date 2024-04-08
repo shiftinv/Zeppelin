@@ -80,10 +80,10 @@ export function initAuth(app: express.Express) {
 
   // Initialize OAuth2 for Discord login
   // When the user logs in through OAuth2, we create them a "login" (= api token) and update their user info in the DB
-  passport.use(
+  const createDiscordOAuth2Strategy = (authURL: string) =>
     new OAuth2Strategy(
       {
-        authorizationURL: "https://discord.com/api/oauth2/authorize",
+        authorizationURL: authURL,
         tokenURL: "https://discord.com/api/oauth2/token",
         clientID: env.CLIENT_ID,
         clientSecret: env.CLIENT_SECRET,
@@ -107,10 +107,15 @@ export function initAuth(app: express.Express) {
         // TODO: Revoke access token, we don't need it anymore
         cb(null, { apiKey });
       },
-    ),
-  );
+    );
 
-  app.get("/auth/login", passport.authenticate("oauth2"));
+  passport.use("oauth2", createDiscordOAuth2Strategy("https://discord.com/oauth2/authorize"));
+  passport.use("oauth2-canary", createDiscordOAuth2Strategy("https://canary.discord.com/oauth2/authorize"));
+
+  app.get("/auth/login", (req, res, next) => {
+    const useCanary = !!Number(req.query.canary || "0");
+    passport.authenticate(useCanary ? "oauth2-canary" : "oauth2")(req, res, next);
+  });
   app.get(
     "/auth/oauth-callback",
     passport.authenticate("oauth2", { failureRedirect: "/", session: false }),
