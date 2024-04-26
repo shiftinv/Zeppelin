@@ -3,7 +3,6 @@ import { CaseTypes } from "../../../data/CaseTypes";
 import { Case } from "../../../data/entities/Case";
 import { UnknownUser, resolveUser } from "../../../utils";
 import { findMatchingAuditLogEntry } from "../../../utils/findMatchingAuditLogEntry";
-import { userToTemplateSafeUser } from "../../../utils/templateSafeObjects";
 import { CasesPlugin } from "../../Cases/CasesPlugin";
 import { LogsPlugin } from "../../Logs/LogsPlugin";
 import { clearIgnoredEvents } from "../functions/clearIgnoredEvents";
@@ -66,8 +65,8 @@ export const CreateBanCaseOnManualBanEvt = modActionsEvt({
     }
 
     pluginData.getPlugin(LogsPlugin).logMemberBan({
-      mod: mod ? userToTemplateSafeUser(mod) : null,
-      user: userToTemplateSafeUser(user),
+      mod,
+      user,
       caseNumber: createdCase?.case_number ?? 0,
       reason,
     });
