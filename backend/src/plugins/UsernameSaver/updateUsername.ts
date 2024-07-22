@@ -5,9 +5,11 @@ import { UsernameSaverPluginType } from "./types";
 
 export async function updateUsername(pluginData: GlobalPluginData<UsernameSaverPluginType>, user: User) {
   if (!user) return;
+
   const newUsername = renderUsername(user);
   const latestEntry = await pluginData.state.usernameHistory.getLastEntry(user.id);
-  if (!latestEntry || newUsername !== latestEntry.username) {
-    await pluginData.state.usernameHistory.addEntry(user.id, newUsername);
+
+  if (!latestEntry || newUsername !== latestEntry.username || user.globalName !== latestEntry.global_name) {
+    await pluginData.state.usernameHistory.addEntry(user.id, newUsername, user.globalName);
   }
 }

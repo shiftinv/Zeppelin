@@ -10,5 +10,7 @@ export class UsernameHistoryEntry {
 
   @Column() username: string;
 
+  @Column({ type: String, nullable: true }) global_name: string | null;
+
   @Column() timestamp: string;
 }
