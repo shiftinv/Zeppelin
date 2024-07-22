@@ -1,3 +1,20 @@
+diff --git a/node_modules/discord.js/src/client/actions/GuildMemberUpdate.js b/node_modules/discord.js/src/client/actions/GuildMemberUpdate.js
+index 491b361..7058b28 100644
+--- a/node_modules/discord.js/src/client/actions/GuildMemberUpdate.js
++++ b/node_modules/discord.js/src/client/actions/GuildMemberUpdate.js
+@@ -8,10 +8,8 @@ class GuildMemberUpdateAction extends Action {
+   handle(data, shard) {
+     const { client } = this;
+     if (data.user.username) {
+-      const user = client.users.cache.get(data.user.id);
+-      if (!user) {
+-        client.users._add(data.user);
+-      } else if (!user._equals(data.user)) {
++      const user = this.getUser({ user_id: data.user.id });
++      if (user && !user._equals(data.user)) {
+         client.actions.UserUpdate.handle(data.user);
+       }
+     }
 diff --git a/node_modules/discord.js/src/structures/Message.js b/node_modules/discord.js/src/structures/Message.js
 index adb5ed5..3c1ca1e 100644
 --- a/node_modules/discord.js/src/structures/Message.js
