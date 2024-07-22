@@ -4,7 +4,7 @@ import { GuildNicknameHistory } from "../../data/GuildNicknameHistory.js";
 import { UsernameHistory } from "../../data/UsernameHistory.js";
 import { CommonPlugin } from "../Common/CommonPlugin.js";
 import { NamesCmd } from "./commands/NamesCmd.js";
-import { ChannelJoinEvt, MessageCreateEvt } from "./events/UpdateNameEvts.js";
+import { ChannelJoinEvt, MemberUpdateEvt, MessageCreateEvt } from "./events/UpdateNameEvts.js";
 import { NameHistoryPluginType, zNameHistoryConfig } from "./types.js";
 
 export const NameHistoryPlugin = guildPlugin<NameHistoryPluginType>()({
@@ -28,6 +28,7 @@ export const NameHistoryPlugin = guildPlugin<NameHistoryPluginType>()({
   // prettier-ignore
   events: [
     ChannelJoinEvt,
+    MemberUpdateEvt,
     MessageCreateEvt,
   ],
 
