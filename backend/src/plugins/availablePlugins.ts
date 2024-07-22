@@ -226,10 +226,6 @@ export const availableGuildPlugins: ZeppelinGuildPluginInfo[] = [
     autoload: true,
   },
   {
-    plugin: UsernameSaverPlugin,
-    docs: usernameSaverPluginDocs,
-  },
-  {
     plugin: UtilityPlugin,
     docs: utilityPluginDocs,
   },
@@ -256,5 +252,9 @@ export const availableGlobalPlugins: ZeppelinGlobalPluginInfo[] = [
   {
     plugin: GuildAccessMonitorPlugin,
     docs: guildAccessMonitorPluginDocs,
+  },
+  {
+    plugin: UsernameSaverPlugin,
+    docs: usernameSaverPluginDocs,
   },
 ];

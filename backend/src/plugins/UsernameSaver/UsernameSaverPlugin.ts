@@ -1,10 +1,10 @@
-import { guildPlugin } from "vety";
+import { globalPlugin } from "vety";
 import { Queue } from "../../Queue.js";
 import { UsernameHistory } from "../../data/UsernameHistory.js";
 import { MessageCreateUpdateUsernameEvt, VoiceChannelJoinUpdateUsernameEvt } from "./events/UpdateUsernameEvts.js";
 import { UsernameSaverPluginType, zUsernameSaverConfig } from "./types.js";
 
-export const UsernameSaverPlugin = guildPlugin<UsernameSaverPluginType>()({
+export const UsernameSaverPlugin = globalPlugin<UsernameSaverPluginType>()({
   name: "username_saver",
 
   configSchema: zUsernameSaverConfig,

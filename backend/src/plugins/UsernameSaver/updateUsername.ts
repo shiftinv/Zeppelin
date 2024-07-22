@@ -1,9 +1,9 @@
 import { User } from "discord.js";
-import { GuildPluginData } from "vety";
+import { GlobalPluginData } from "vety";
 import { renderUsername } from "../../utils.js";
 import { UsernameSaverPluginType } from "./types.js";
 
-export async function updateUsername(pluginData: GuildPluginData<UsernameSaverPluginType>, user: User) {
+export async function updateUsername(pluginData: GlobalPluginData<UsernameSaverPluginType>, user: User) {
   if (!user) return;
 
   const newUsername = renderUsername(user);
