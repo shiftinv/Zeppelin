@@ -1,7 +1,11 @@
 import { Queue } from "../../Queue";
 import { UsernameHistory } from "../../data/UsernameHistory";
 import { zeppelinGlobalPlugin } from "../ZeppelinPluginBlueprint";
-import { MessageCreateUpdateUsernameEvt, VoiceChannelJoinUpdateUsernameEvt } from "./events/UpdateUsernameEvts";
+import {
+  MemberUpdateUpdateUsernameEvt,
+  MessageCreateUpdateUsernameEvt,
+  VoiceChannelJoinUpdateUsernameEvt,
+} from "./events/UpdateUsernameEvts";
 import { UsernameSaverPluginType, zUsernameSaverConfig } from "./types";
 
 export const UsernameSaverPlugin = zeppelinGlobalPlugin<UsernameSaverPluginType>()({
@@ -13,6 +17,7 @@ export const UsernameSaverPlugin = zeppelinGlobalPlugin<UsernameSaverPluginType>
   // prettier-ignore
   events: [
     MessageCreateUpdateUsernameEvt,
+    MemberUpdateUpdateUsernameEvt,
     VoiceChannelJoinUpdateUsernameEvt,
   ],
 
