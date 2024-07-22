@@ -63,7 +63,6 @@ export const guildPlugins: Array<ZeppelinGuildPluginBlueprint<any>> = [
   SpamPlugin,
   StarboardPlugin,
   TagsPlugin,
-  UsernameSaverPlugin,
   UtilityPlugin,
   WelcomeMessagePlugin,
   CasesPlugin,
@@ -85,6 +84,7 @@ export const globalPlugins: Array<ZeppelinGlobalPluginBlueprint<any>> = [
   GuildConfigReloaderPlugin,
   BotControlPlugin,
   GuildAccessMonitorPlugin,
+  UsernameSaverPlugin,
 ];
 
 // prettier-ignore

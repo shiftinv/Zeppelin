@@ -1,9 +1,9 @@
 import { User } from "discord.js";
-import { GuildPluginData } from "knub";
+import { GlobalPluginData } from "knub";
 import { renderUsername } from "../../utils";
 import { UsernameSaverPluginType } from "./types";
 
-export async function updateUsername(pluginData: GuildPluginData<UsernameSaverPluginType>, user: User) {
+export async function updateUsername(pluginData: GlobalPluginData<UsernameSaverPluginType>, user: User) {
   if (!user) return;
   const newUsername = renderUsername(user);
   const latestEntry = await pluginData.state.usernameHistory.getLastEntry(user.id);
