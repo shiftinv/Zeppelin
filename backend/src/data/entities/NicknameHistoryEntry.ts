@@ -10,7 +10,7 @@ export class NicknameHistoryEntry {
 
   @Column() user_id: string;
 
-  @Column() nickname: string;
+  @Column({ type: String, nullable: true }) nickname: string | null;
 
   @Column() timestamp: string;
 }

@@ -52,10 +52,11 @@ export class UsernameHistory extends BaseRepository {
     });
   }
 
-  async addEntry(userId, username) {
+  async addEntry(userId, username, globalName) {
     await this.usernameHistory.insert({
       user_id: userId,
       username,
+      global_name: globalName,
     });
 
     // Cleanup (leave only the last MAX_USERNAME_ENTRIES_PER_USER entries)
