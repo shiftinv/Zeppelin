@@ -1,9 +1,7 @@
 version: '3'
+
 name: zeppelin-dev
-volumes:
-  vscode-remote: {}
-  vscode-server: {}
-  jetbrains-data: {}
+
 services:
   nginx:
     build:
@@ -14,7 +12,7 @@ services:
     ports:
       - "${DOCKER_DEV_WEB_PORT:?Missing DOCKER_DEV_WEB_PORT}:443"
     volumes:
-      - ./:/zeppelin
+      - ./:/zeppelin:ro
 
   mysql:
     image: mysql:8.0
@@ -35,11 +33,5 @@ services:
       args:
         DOCKER_DEV_SSH_PASSWORD: ${DOCKER_DEV_SSH_PASSWORD:?Missing DOCKER_DEV_SSH_PASSWORD}
         DOCKER_DEV_UID: ${DOCKER_DEV_UID:-1000}
-    ports:
-      - "${DOCKER_DEV_SSH_PORT:?Missing DOCKER_DEV_SSH_PORT}:22"
     volumes:
-      - ./:/home/ubuntu/zeppelin
-      - ~/.ssh:/home/ubuntu/.ssh
-      - vscode-remote:/home/ubuntu/.vscode-remote
-      - vscode-server:/home/ubuntu/.vscode-server
-      - jetbrains-data:/home/ubuntu/.cache/JetBrains
+      - .:/workspaces/zeppelin:cached
