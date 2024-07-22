@@ -6,7 +6,10 @@ import { ChannelArchiverPluginType } from "./types";
 
 export const ChannelArchiverPlugin = zeppelinGuildPlugin<ChannelArchiverPluginType>()({
   name: "channel_archiver",
-  showInDocs: false,
+  showInDocs: true,
+  info: {
+    prettyName: "Channel Archiver",
+  },
 
   dependencies: () => [TimeAndDatePlugin],
   configParser: (input) => z.strictObject({}).parse(input),
