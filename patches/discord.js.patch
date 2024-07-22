@@ -1,0 +1,17 @@
+diff --git a/src/client/actions/GuildMemberUpdate.js b/src/client/actions/GuildMemberUpdate.js
+index 491b36181e0a35edd7a231065aea7ddcdcb3d7c8..7058b282f62e24f4631cd9dc85b11f036815e81c 100644
+--- a/src/client/actions/GuildMemberUpdate.js
++++ b/src/client/actions/GuildMemberUpdate.js
+@@ -8,10 +8,8 @@ class GuildMemberUpdateAction extends Action {
+   handle(data, shard) {
+     const { client } = this;
+     if (data.user.username) {
+-      const user = client.users.cache.get(data.user.id);
+-      if (!user) {
+-        client.users._add(data.user);
+-      } else if (!user._equals(data.user)) {
++      const user = this.getUser({ user_id: data.user.id });
++      if (user && !user._equals(data.user)) {
+         client.actions.UserUpdate.handle(data.user);
+       }
+     }

@@ -12,3 +12,6 @@ overrides:
   # Keep in sync with Vety's discord.js version
   discord.js: "14.23.2"
   discord-api-types: "0.38.30"
+
+patchedDependencies:
+  discord.js: patches/discord.js.patch

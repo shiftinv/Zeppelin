@@ -8,6 +8,11 @@ overrides:
   discord.js: 14.23.2
   discord-api-types: 0.38.30
 
+patchedDependencies:
+  discord.js:
+    hash: 6775b3acfa385ff33513eb249165ae445b4b080098c256e5df5ad4e5a52255a5
+    path: patches/discord.js.patch
+
 importers:
 
   .:
@@ -69,7 +74,7 @@ importers:
         version: 1.0.2
       discord.js:
         specifier: 14.23.2
-        version: 14.23.2(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+        version: 14.23.2(patch_hash=6775b3acfa385ff33513eb249165ae445b4b080098c256e5df5ad4e5a52255a5)(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       emoji-regex:
         specifier: ^10.0.0
         version: 10.6.0
@@ -4153,7 +4158,7 @@ snapshots:
 
   discord-api-types@0.38.30: {}
 
-  discord.js@14.23.2(bufferutil@4.0.9)(utf-8-validate@5.0.10):
+  discord.js@14.23.2(patch_hash=6775b3acfa385ff33513eb249165ae445b4b080098c256e5df5ad4e5a52255a5)(bufferutil@4.0.9)(utf-8-validate@5.0.10):
     dependencies:
       '@discordjs/builders': 1.13.0
       '@discordjs/collection': 1.5.3
@@ -5677,7 +5682,7 @@ snapshots:
 
   vety@1.0.0-rc2(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10):
     dependencies:
-      discord.js: 14.23.2(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      discord.js: 14.23.2(patch_hash=6775b3acfa385ff33513eb249165ae445b4b080098c256e5df5ad4e5a52255a5)(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       knub-command-manager: 9.1.0
       ts-essentials: 10.1.1(typescript@5.9.3)
       zod: 4.1.12
