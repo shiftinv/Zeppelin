@@ -8,6 +8,20 @@ import { USERNAME_RETENTION_PERIOD } from "../../../data/cleanup/usernames.js";
 import { DAYS, renderUsername } from "../../../utils.js";
 import { nameHistoryCmd } from "../types.js";
 
+interface NameEntry {
+  timestamp: string;
+  name: string | null;
+}
+
+/* de-duplicate consecutive entries with the same name, keeping the oldest one */
+function dedupeConsecutive(entries: NameEntry[]): NameEntry[] {
+  return entries.filter((item, index) => index === entries.length - 1 || item.name !== entries[index + 1].name);
+}
+
+function formatHistoryEntry(entry: NameEntry): string {
+  return `\`[${entry.timestamp}]\` ${entry.name ? `**${disableCodeBlocks(entry.name)}**` : "*None*"}`;
+}
+
 export const NamesCmd = nameHistoryCmd({
   trigger: "names",
   permission: "can_view",
@@ -25,10 +39,14 @@ export const NamesCmd = nameHistoryCmd({
       return;
     }
 
-    const nicknameRows = nicknames.map(
-      (r) => `\`[${r.timestamp}]\` ${r.nickname ? `**${disableCodeBlocks(r.nickname)}**` : "*None*"}`,
+    const nicknameRows = nicknames.map((r) => ({ timestamp: r.timestamp, name: r.nickname })).map(formatHistoryEntry);
+
+    const globalNameRows = dedupeConsecutive(
+      usernames.map((r) => ({ timestamp: r.timestamp, name: r.global_name })),
+    ).map(formatHistoryEntry);
+    const usernameRows = dedupeConsecutive(usernames.map((r) => ({ timestamp: r.timestamp, name: r.username }))).map(
+      formatHistoryEntry,
     );
-    const usernameRows = usernames.map((r) => `\`[${r.timestamp}]\` **${disableCodeBlocks(r.username)}**`);
 
     const user = await pluginData.client.users.fetch(args.userId as Snowflake).catch(() => null);
     const currentUsername = user ? renderUsername(user) : args.userId;
@@ -39,6 +57,11 @@ export const NamesCmd = nameHistoryCmd({
     let message = `Name history for **${currentUsername}**:`;
     if (nicknameRows.length) {
       message += `\n\n__Last ${MAX_NICKNAME_ENTRIES_PER_USER} nicknames within ${nicknameDays} days:__\n${nicknameRows.join(
+        "\n",
+      )}`;
+    }
+    if (globalNameRows.length) {
+      message += `\n\n__Last ${MAX_USERNAME_ENTRIES_PER_USER} display names within ${usernameDays} days:__\n${globalNameRows.join(
         "\n",
       )}`;
     }
