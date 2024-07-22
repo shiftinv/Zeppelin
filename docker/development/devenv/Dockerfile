@@ -4,7 +4,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # Set up some core packages
 RUN apt-get update
-RUN apt-get install -y sudo curl software-properties-common
+RUN apt-get install -y sudo curl software-properties-common mysql-client
 
 RUN add-apt-repository ppa:git-core/ppa && apt-get update && apt-get install -y git
 
