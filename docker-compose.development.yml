@@ -30,8 +30,5 @@ services:
   devenv:
     build:
       context: ./docker/development/devenv
-      args:
-        DOCKER_DEV_SSH_PASSWORD: ${DOCKER_DEV_SSH_PASSWORD:?Missing DOCKER_DEV_SSH_PASSWORD}
-        DOCKER_DEV_UID: ${DOCKER_DEV_UID:-1000}
     volumes:
       - .:/workspaces/zeppelin:cached
