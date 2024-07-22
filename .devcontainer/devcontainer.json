@@ -5,7 +5,7 @@
 
   "service": "devenv",
   "remoteUser": "ubuntu",
-  "workspaceFolder": "/workspace/zeppelin",
+  "workspaceFolder": "/workspaces/zeppelin",
   "customizations": {
     "vscode": {
       "extensions": [

@@ -1,8 +1,4 @@
 name: zeppelin-dev
-volumes:
-  home: {}
-  mysql-data: {}
-  redis-data: {}
 services:
   nginx:
     build:
@@ -24,14 +20,14 @@ services:
     # If you're upgrading from an older version, you can load your old database by switching the volumes below.
     # Then, take a database dump from the old database, switch the volumes back, and load the dump into the new database.
     volumes:
-      - mysql-data:/var/lib/mysql
+      - db:/var/lib/mysql
       # - ./docker/production/data/mysql:/var/lib/mysql
     command: --authentication-policy=mysql_native_password
 
   redis:
     image: redis:8.2.3
     volumes:
-      - redis-data:/data
+      - redis:/data
 
   devenv:
     build:
@@ -42,12 +38,8 @@ services:
     ports:
       - "${DEVELOPMENT_SSH_PORT:?Missing DEVELOPMENT_SSH_PORT}:22"
     volumes:
-      - home:/home/ubuntu
-      - ./:/workspace/zeppelin
+      - .:/workspaces/zeppelin:cached
 
-  cftunnel:
-    profiles: [cftunnel]
-    image: cloudflare/cloudflared:latest
-    command: tunnel run
-    environment:
-      TUNNEL_TOKEN: ${CF_TUNNEL_TOKEN}
+volumes:
+  db:
+  redis:
