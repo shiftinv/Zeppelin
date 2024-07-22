@@ -4,7 +4,7 @@ import { GuildNicknameHistory } from "../../data/GuildNicknameHistory";
 import { UsernameHistory } from "../../data/UsernameHistory";
 import { zeppelinGuildPlugin } from "../ZeppelinPluginBlueprint";
 import { NamesCmd } from "./commands/NamesCmd";
-import { ChannelJoinEvt, MessageCreateEvt } from "./events/UpdateNameEvts";
+import { ChannelJoinEvt, MemberUpdateEvt, MessageCreateEvt } from "./events/UpdateNameEvts";
 import { NameHistoryPluginType, zNameHistoryConfig } from "./types";
 
 const defaultOptions: PluginOptions<NameHistoryPluginType> = {
@@ -39,6 +39,7 @@ export const NameHistoryPlugin = zeppelinGuildPlugin<NameHistoryPluginType>()({
   // prettier-ignore
   events: [
     ChannelJoinEvt,
+    MemberUpdateEvt,
     MessageCreateEvt,
   ],
 
