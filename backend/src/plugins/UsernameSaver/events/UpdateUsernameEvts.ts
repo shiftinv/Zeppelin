@@ -1,6 +1,16 @@
 import { usernameSaverEvt } from "../types.js";
 import { updateUsername } from "../updateUsername.js";
 
+export const MemberUpdateUpdateUsernameEvt = usernameSaverEvt({
+  event: "userUpdate",
+
+  async listener(meta) {
+    meta.pluginData.state.updateQueue.add(() => updateUsername(meta.pluginData, meta.args.newUser));
+  },
+});
+
+// keep these other two events around, in case we miss updates during downtime
+
 export const MessageCreateUpdateUsernameEvt = usernameSaverEvt({
   event: "messageCreate",
 
