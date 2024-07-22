@@ -24,7 +24,7 @@ services:
     ports:
       - ${DOCKER_DEV_MYSQL_PORT:?Missing DOCKER_DEV_MYSQL_PORT}:3306
     volumes:
-      - ./docker/development/data/mysql:/var/lib/mysql
+      - db:/var/lib/mysql
     command: --authentication-policy=mysql_native_password
 
   devenv:
@@ -34,3 +34,6 @@ services:
       - .:/workspaces/zeppelin:cached
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
+
+volumes:
+  db:
