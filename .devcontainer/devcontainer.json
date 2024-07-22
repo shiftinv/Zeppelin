@@ -4,7 +4,7 @@
   "dockerComposeFile": "../docker-compose.development.yml",
 
   "service": "devenv",
-  "remoteUser": "ubuntu",
+  "remoteUser": "root",
   "workspaceFolder": "/workspaces/zeppelin",
   "customizations": {
     "vscode": {

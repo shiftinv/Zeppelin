@@ -32,11 +32,6 @@ services:
   devenv:
     build:
       context: ./docker/development/devenv
-      args:
-        DEVELOPMENT_SSH_PASSWORD: ${DEVELOPMENT_SSH_PASSWORD:?Missing DEVELOPMENT_SSH_PASSWORD}
-        DEVELOPMENT_UID: ${DEVELOPMENT_UID:-1000}
-    ports:
-      - "${DEVELOPMENT_SSH_PORT:?Missing DEVELOPMENT_SSH_PORT}:22"
     volumes:
       - .:/workspaces/zeppelin:cached
 
