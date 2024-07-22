@@ -32,3 +32,5 @@ services:
       context: ./docker/development/devenv
     volumes:
       - .:/workspaces/zeppelin:cached
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
