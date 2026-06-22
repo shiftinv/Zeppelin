@@ -11,7 +11,7 @@ import { GuildPluginData } from "vety";
 import { humanizeDuration } from "../../../humanizeDuration.js";
 import { logger } from "../../../logger.js";
 import { canActOn } from "../../../pluginUtils.js";
-import { convertDelayStringToMS, renderUserUsername } from "../../../utils.js";
+import { convertDelayStringToMS, noop, renderUserUsername } from "../../../utils.js";
 import { CaseArgs } from "../../Cases/types.js";
 import { ModActionsPlugin } from "../../ModActions/ModActionsPlugin.js";
 import { MODAL_TIMEOUT } from "../commands/ModMenuUserCtxCmd.js";
@@ -112,5 +112,6 @@ export async function launchBanActionModal(
       const evidence = submitted.fields.getTextInputValue("evidence");
 
       await banAction(pluginData, duration, reason, evidence, target, interaction, submitted);
-    });
+    })
+    .catch(noop);  // likely a timeout
 }

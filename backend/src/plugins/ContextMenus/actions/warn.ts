@@ -10,7 +10,7 @@ import {
 import { GuildPluginData } from "vety";
 import { logger } from "../../../logger.js";
 import { canActOn } from "../../../pluginUtils.js";
-import { renderUserUsername } from "../../../utils.js";
+import { noop, renderUserUsername } from "../../../utils.js";
 import { CaseArgs } from "../../Cases/types.js";
 import { ModActionsPlugin } from "../../ModActions/ModActionsPlugin.js";
 import { MODAL_TIMEOUT } from "../commands/ModMenuUserCtxCmd.js";
@@ -104,5 +104,6 @@ export async function launchWarnActionModal(
       const evidence = submitted.fields.getTextInputValue("evidence");
 
       await warnAction(pluginData, reason, evidence, target, interaction, submitted);
-    });
+    })
+    .catch(noop);  // likely a timeout
 }

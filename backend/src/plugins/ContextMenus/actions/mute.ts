@@ -12,7 +12,7 @@ import { ERRORS, RecoverablePluginError } from "../../../RecoverablePluginError.
 import { humanizeDuration } from "../../../humanizeDuration.js";
 import { logger } from "../../../logger.js";
 import { canActOn } from "../../../pluginUtils.js";
-import { convertDelayStringToMS } from "../../../utils.js";
+import { convertDelayStringToMS, noop } from "../../../utils.js";
 import { CaseArgs } from "../../Cases/types.js";
 import { LogsPlugin } from "../../Logs/LogsPlugin.js";
 import { ModActionsPlugin } from "../../ModActions/ModActionsPlugin.js";
@@ -134,5 +134,6 @@ export async function launchMuteActionModal(
       const evidence = submitted.fields.getTextInputValue("evidence");
 
       await muteAction(pluginData, duration, reason, evidence, target, interaction, submitted);
-    });
+    })
+    .catch(noop);  // likely a timeout
 }
