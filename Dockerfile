@@ -13,6 +13,7 @@ USER node
 
 # Install dependencies before copying over any other files
 COPY --chown=node:node package.json pnpm-workspace.yaml pnpm-lock.yaml /zeppelin
+COPY --chown=node:node patches/ /zeppelin/patches
 RUN mkdir /zeppelin/backend
 COPY --chown=node:node backend/package.json /zeppelin/backend
 RUN mkdir /zeppelin/shared
