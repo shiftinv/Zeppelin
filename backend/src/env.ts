@@ -42,6 +42,8 @@ const envType = z.object({
   DEFAULT_SUCCESS_EMOJI: z.string().optional().default("✅"),
   DEFAULT_ERROR_EMOJI: z.string().optional().default("❌"),
 
+  CUSTOM_ACTIVITY: z.string().optional(),
+
   DB_HOST: z.string().optional(),
   DB_PORT: z.preprocess((v) => Number(v), z.number()).optional(),
   DB_USER: z.string().optional(),

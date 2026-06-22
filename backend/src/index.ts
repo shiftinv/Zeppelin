@@ -3,6 +3,7 @@
 import "./threadsSignalFix.js";
 
 import {
+  ActivityType,
   Client,
   Events,
   GatewayIntentBits,
@@ -261,6 +262,15 @@ connect().then(async () => {
       GatewayIntentBits.Guilds,
       GatewayIntentBits.GuildVoiceStates,
     ],
+    ...(env.CUSTOM_ACTIVITY && {
+      presence: {
+        activities: [{
+          type: ActivityType.Custom,
+          name: "custom",
+          state: env.CUSTOM_ACTIVITY,
+        }]
+      }
+    })
   });
 
   client.setMaxListeners(200);
